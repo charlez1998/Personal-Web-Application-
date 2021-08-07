@@ -39,3 +39,15 @@ def prediction(filename):
         set_session(sess)
         probabilities = model.predict(np.array([my_image_re,]))[0,:]
         print(probabilities)
+
+        number_to_class = ['covid', 'no-covid']
+        index = np.argsort(probabilities)
+        predictions = {
+            "class1":number_to_class[index[1]],
+            "class2":number_to_class[index[0]],
+            "prob1":probabilities[index[1]],
+            "prob2":probabilities[index[0]],
+            }
+    return render_template('predict.html', predictions=predictions)
+
+    app.run(host='0.0.0.0', port=80)
